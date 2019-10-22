@@ -23,7 +23,7 @@ public class ClubQueryDTO {
         return "ClubQueryDTO{" +
                 "id=" + id +
                 ", clubName='" + clubName + '\'' +
-                ", user=" + user.getUserName() +
+                ", user=" + user.getUsername() +
                 ", teams=" + teams.size() +
                 '}';
     }

@@ -13,4 +13,9 @@ public interface UserCommandService {
     UUID createUser(UserCreateDTO userCreateDTO);
 
     UserQueryDTO updateUser(UUID id, UserUpdateDTO userUpdateDTO);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
+
 }

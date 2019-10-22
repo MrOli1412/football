@@ -16,15 +16,11 @@ public class Club implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @NotNull
     private UUID id;
 
     @NotNull
     private String clubName;
 
-    @NotNull
-    @OneToOne
-    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
     private Set<Team> teams;

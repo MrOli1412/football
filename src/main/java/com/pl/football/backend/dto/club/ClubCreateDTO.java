@@ -11,7 +11,6 @@ public class ClubCreateDTO {
 
     private String clubName;
 
-    private User user;
 
 
 }
