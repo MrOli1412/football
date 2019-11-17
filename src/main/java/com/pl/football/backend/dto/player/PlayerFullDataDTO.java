@@ -1,17 +1,15 @@
 package com.pl.football.backend.dto.player;
 
+import com.pl.football.backend.model.TransferType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
-public class PlayerCreateDTO {
-
-    private UUID id;
-
+@AllArgsConstructor
+public class PlayerFullDataDTO {
     @NotNull
     private String firstName;
 
@@ -19,8 +17,7 @@ public class PlayerCreateDTO {
     private String lastName;
 
     @NotNull
-    @Pattern(regexp = "^[0-9]*$")
-    private Integer evidentialNumber;
+    private String evidentialNumber;
 
     @NotNull
     private LocalDate birthDay;
@@ -28,6 +25,10 @@ public class PlayerCreateDTO {
     @NotNull
     private LocalDate contractDate;
 
-    @NotNull
-    private UUID team;
+    private String amateur;
+
+    private String lastClub;
+
+    private TransferType transferType;
+
 }

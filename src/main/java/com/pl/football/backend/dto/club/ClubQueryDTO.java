@@ -4,6 +4,7 @@ import com.pl.football.backend.model.Team;
 import com.pl.football.backend.model.User;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.UUID;
 
@@ -12,9 +13,9 @@ import java.util.UUID;
 public class ClubQueryDTO {
     private UUID id;
 
+    @NotNull
     private String clubName;
 
-    private User user;
 
     private Set<Team> teams;
 
@@ -23,7 +24,6 @@ public class ClubQueryDTO {
         return "ClubQueryDTO{" +
                 "id=" + id +
                 ", clubName='" + clubName + '\'' +
-                ", user=" + user.getUsername() +
                 ", teams=" + teams.size() +
                 '}';
     }

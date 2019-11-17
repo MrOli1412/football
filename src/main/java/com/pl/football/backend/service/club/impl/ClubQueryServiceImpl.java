@@ -7,6 +7,7 @@ import com.pl.football.backend.service.club.ClubQueryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,9 +24,9 @@ public class ClubQueryServiceImpl implements ClubQueryService {
     @Override
     public ClubQueryDTO getClubById(UUID id) {
         Optional<Club> byId = clubRepository.findById(id);
-        if(byId.isPresent()){
+        if (byId.isPresent()) {
             ModelMapper modelMapper = new ModelMapper();
-            ClubQueryDTO club = modelMapper.map(byId.get(),ClubQueryDTO.class);
+            ClubQueryDTO club = modelMapper.map(byId.get(), ClubQueryDTO.class);
             return club;
         }
         return null;
@@ -33,6 +34,12 @@ public class ClubQueryServiceImpl implements ClubQueryService {
 
     @Override
     public List<ClubQueryDTO> getAllClubs() {
-        return null;
+        List<ClubQueryDTO> result = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+        List<Club> all = clubRepository.findAll();
+        all.forEach(club -> {
+            result.add(modelMapper.map(club, ClubQueryDTO.class));
+        });
+        return result;
     }
 }

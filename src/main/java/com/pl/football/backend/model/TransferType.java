@@ -6,6 +6,12 @@ public enum TransferType {
     WOLNY_ZAWODNIK("Z"),
     WYCHOWANEK("W");
 
+    String value;
     TransferType(String w) {
+        this.value = w;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

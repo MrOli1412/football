@@ -9,6 +9,7 @@ import com.pl.football.backend.service.user.UserCommandService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -29,7 +30,6 @@ public class UserCommandServiceImpl implements UserCommandService {
         user = userRepository.save(user);
         return user.getId();
 
-
     }
 
     @Override
@@ -46,6 +46,8 @@ public class UserCommandServiceImpl implements UserCommandService {
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
+
+
 
 
 }

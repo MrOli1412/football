@@ -1,6 +1,6 @@
 package com.pl.football.backend.controller.player;
 
-import com.pl.football.backend.dto.player.PlayerQueryDTO;
+import com.pl.football.backend.dto.player.PlayerFullDataDTO;
 import com.pl.football.backend.service.player.PlayerQueryService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,11 @@ public class PlayerQueryController {
         this.playerQueryService = playerQueryService;
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<PlayerQueryDTO>> getAllPlayers(){
+    public ResponseEntity<List<PlayerFullDataDTO>> getAllPlayers(){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerQueryService.getAllPlayers());
     }
     @GetMapping(path = "{id}")
-    public ResponseEntity<PlayerQueryDTO> getPlayerById(@PathVariable("id") UUID id){
+    public ResponseEntity<PlayerFullDataDTO> getPlayerById(@PathVariable("id") UUID id){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(playerQueryService.getPlayerById(id));
     }
 }

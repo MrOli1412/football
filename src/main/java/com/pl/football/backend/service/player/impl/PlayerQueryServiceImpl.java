@@ -1,6 +1,6 @@
 package com.pl.football.backend.service.player.impl;
 
-import com.pl.football.backend.dto.player.PlayerQueryDTO;
+import com.pl.football.backend.dto.player.PlayerFullDataDTO;
 import com.pl.football.backend.repository.PlayerRepository;
 import com.pl.football.backend.service.player.PlayerQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ public class PlayerQueryServiceImpl implements PlayerQueryService {
     }
 
     @Override
-    public List<PlayerQueryDTO> getAllPlayers() {
+    public List<PlayerFullDataDTO> getAllPlayers() {
         return null;
     }
 
     @Override
-    public PlayerQueryDTO getPlayerById(UUID id) {
+    public PlayerFullDataDTO getPlayerById(UUID id) {
         return null;
     }
 }

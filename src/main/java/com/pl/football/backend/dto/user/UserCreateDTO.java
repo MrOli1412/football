@@ -26,6 +26,8 @@ public class UserCreateDTO {
     @NotNull
     private ClubCreateDTO club;
 
+
+
     public UserCreateDTO(@NotNull String username, @NotNull @Email String email, @NotNull String password) {
         this.username = username;
         this.email = email;

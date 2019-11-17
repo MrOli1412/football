@@ -18,7 +18,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/club")
 @Log4j2
-
 public class ClubQueryController {
 
     private final ClubQueryService clubQueryService;

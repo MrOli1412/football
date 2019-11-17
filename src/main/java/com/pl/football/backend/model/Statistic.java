@@ -14,13 +14,9 @@ import java.io.Serializable;
 public class Statistic implements Serializable {
 
 
-    @Pattern(regexp = "^[0-9]*$")
     private Integer redCards;
-    @Pattern(regexp = "^[0-9]*$")
     private Integer yellowCards;
-    @Pattern(regexp = "^[0-9]*$")
     private Integer goals;
-    @Pattern(regexp = "^[0-9]*$")
     private Integer assist;
 
 

@@ -3,17 +3,10 @@ package com.pl.football.backend.controller.authentication;
 import com.pl.football.backend.config.jwt.JwtProvider;
 import com.pl.football.backend.dto.user.UserCreateDTO;
 import com.pl.football.backend.dto.user.UserLoginDTO;
-import com.pl.football.backend.dto.user.UserQueryDTO;
-import com.pl.football.backend.exception.FootballException;
-import com.pl.football.backend.model.Role;
 import com.pl.football.backend.model.RoleName;
-import com.pl.football.backend.model.User;
-import com.pl.football.backend.repository.RoleRepository;
-import com.pl.football.backend.repository.UserRepository;
 import com.pl.football.backend.service.club.ClubCommandService;
 import com.pl.football.backend.service.role.RoleCommandService;
 import com.pl.football.backend.service.user.UserCommandService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,11 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.service.ResponseMessage;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)

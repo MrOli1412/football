@@ -27,11 +27,11 @@ public class RoleCommandServiceImpl implements RoleCommandService {
 
     @Override
     public void saveRoles() {
-        List<Role> roles = new ArrayList<>();
-        roles.add(new Role(RoleName.ROLE_ADMIN));
-        roles.add(new Role(RoleName.ROLE_USER));
-        roles.add(new Role(RoleName.ROLE_PM));
-
-        roleRepository.saveAll(roles);
+//        List<Role> roles = new ArrayList<>();
+//        roles.add(new Role(RoleName.ROLE_ADMIN));
+//        roles.add(new Role(RoleName.ROLE_USER));
+//        roles.add(new Role(RoleName.ROLE_PM));
+//
+//        roleRepository.saveAll(roles);
     }
 }

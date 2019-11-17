@@ -3,6 +3,7 @@ package com.pl.football.backend.service.team.impl;
 import com.pl.football.backend.dto.team.TeamQueryDTO;
 import com.pl.football.backend.repository.TeamRepository;
 import com.pl.football.backend.service.team.TeamQueryService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class TeamQueryServiceImpl implements TeamQueryService {
 
     @Override
     public TeamQueryDTO getTeamById(UUID id) {
-        return null;
+        ModelMapper mapper = new ModelMapper();
+
+        return mapper.map(teamRepository.getOne(id),TeamQueryDTO.class);
     }
 }

@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface ClubCommandService {
     UUID createClub(ClubCreateDTO clubCreateDTO);
     ClubQueryDTO updateClub(UUID id, ClubUpdateDTO clubUpdateDTO);
+
 }

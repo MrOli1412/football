@@ -32,7 +32,7 @@
             <AppenderRef ref="SpringBoot-Appender" />
             <AppenderRef ref="Console-Appender" />
         </Logger>
-        <Logger name="com.pl.football.backend.controller" level="info"
+        <Logger name="com.pl.football.backend" level="info"
                 additivity="false">
             <AppenderRef ref="App-Appender" />
             <AppenderRef ref="Console-Appender" />

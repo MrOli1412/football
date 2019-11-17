@@ -20,11 +20,8 @@ public class Setting implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private UUID id;
 
-    @NotNull
-    @Email
-    private String email;
 
-    @Pattern(regexp = "^[0-9]*$")
+
     private Integer yellowCardLimit;
 
 

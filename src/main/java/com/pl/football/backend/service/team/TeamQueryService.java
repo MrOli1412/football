@@ -11,4 +11,5 @@ public interface TeamQueryService {
     List<TeamQueryDTO> getAllTeams();
 
     TeamQueryDTO getTeamById(UUID id);
+
 }

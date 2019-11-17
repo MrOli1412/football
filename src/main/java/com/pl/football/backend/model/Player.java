@@ -1,6 +1,8 @@
 package com.pl.football.backend.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,16 +10,16 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-
 @Data
 @Entity
 @Table(name = "player")
 public class Player implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @NotNull
@@ -27,8 +29,7 @@ public class Player implements Serializable {
     private String lastName;
 
     @NotNull
-    @Pattern(regexp = "^[0-9]*$")
-    private Integer evidentialNumber;
+    private String evidentialNumber;
 
     @NotNull
     private LocalDate birthDay;
@@ -46,19 +47,22 @@ public class Player implements Serializable {
 
     private LocalDate penaltyStopDate;
 
-    @Pattern(regexp = "^[0-9]*$")
     private Integer dressNumber;
 
     @ManyToOne
     @JoinColumn(name = "Team_ID", nullable = false)
+    @ToString.Exclude
     private Team team;
 
     @ManyToOne
-    @JoinColumn(name = "Match_ID", nullable = false)
+    @JoinColumn(name = "Match_ID")
+    @ToString.Exclude
     private Match match;
 
     @Embedded
-    Statistic statistic;
+    private Statistic statistic;
+
+
 
     public Optional<@Past LocalDate> getBirthDay() {
         return Optional.of(birthDay);
@@ -69,10 +73,39 @@ public class Player implements Serializable {
     }
 
     public Optional<@Past LocalDate> getPenaltyStartDate() {
-        return Optional.of(penaltyStartDate);
+        return Optional.ofNullable(penaltyStartDate);
     }
 
     public Optional<@Past LocalDate> getPenaltyStopDate() {
-        return Optional.of(penaltyStopDate);
+        return Optional.ofNullable(penaltyStopDate);
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Player)) return false;
+        Player player = (Player) o;
+        return Objects.equals(id, player.id) &&
+                Objects.equals(firstName, player.firstName) &&
+                Objects.equals(lastName, player.lastName) &&
+                Objects.equals(evidentialNumber, player.evidentialNumber) &&
+                Objects.equals(birthDay, player.birthDay) &&
+                Objects.equals(contractDate, player.contractDate) &&
+                Objects.equals(amateur, player.amateur) &&
+                Objects.equals(lastClub, player.lastClub) &&
+                transferType == player.transferType &&
+                Objects.equals(penaltyStartDate, player.penaltyStartDate) &&
+                Objects.equals(penaltyStopDate, player.penaltyStopDate) &&
+                Objects.equals(dressNumber, player.dressNumber) &&
+                Objects.equals(team, player.team) &&
+                Objects.equals(match, player.match) &&
+                Objects.equals(statistic, player.statistic);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, evidentialNumber, birthDay, contractDate, amateur, lastClub, transferType, penaltyStartDate, penaltyStopDate, dressNumber, team, match, statistic);
     }
 }
