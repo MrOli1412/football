@@ -5,13 +5,8 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.UUID;
-
 @Data
-public class PlayerCreateDTO {
-
-    private UUID id;
-
+public class PlayerMatchDTO {
     @NotNull
     private String firstName;
 
@@ -24,9 +19,6 @@ public class PlayerCreateDTO {
     @NotNull
     private LocalDate birthDay;
 
-    @NotNull
-    private LocalDate contractDate;
+    private Integer dressNumber;
 
-    @NotNull
-    private UUID team;
 }

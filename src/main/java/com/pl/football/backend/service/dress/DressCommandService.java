@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Service
 public interface DressCommandService {
-    UUID createDress(DressCreateDTO dressCreateDTO);
+    UUID createDress(UUID teamId, DressCreateDTO dressCreateDTO);
 
     DressQueryDTO updateDress(UUID id, DressUpdateDTO dressUpdateDTO);
 }

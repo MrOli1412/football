@@ -17,19 +17,20 @@ import java.util.UUID;
 @Log4j2
 public class DressCommandController {
     private final DressCommandService dressCommandService;
-@Autowired
+
+    @Autowired
     public DressCommandController(DressCommandService dressCommandService) {
         this.dressCommandService = dressCommandService;
     }
 
-    @PostMapping()
-    public ResponseEntity<UUID> createDress(@RequestBody DressCreateDTO dressCreateDTO){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressCommandService.createDress(dressCreateDTO));
+    @PostMapping(path = "{teamId}")
+    public ResponseEntity<UUID> createDress(@PathVariable("teamId") UUID teamId, @RequestBody DressCreateDTO dressCreateDTO) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressCommandService.createDress(teamId, dressCreateDTO));
     }
 
     @PutMapping(path = "{id}")
-    public ResponseEntity<DressQueryDTO> updateDress(@PathVariable("id")UUID id, @RequestBody DressUpdateDTO dressUpdateDTO){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressCommandService.updateDress(id,dressUpdateDTO));
+    public ResponseEntity<DressQueryDTO> updateDress(@PathVariable("id") UUID id, @RequestBody DressUpdateDTO dressUpdateDTO) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressCommandService.updateDress(id, dressUpdateDTO));
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Service
 public interface MatchCommandService {
-    UUID createMatch(MatchCreateDTO  match);
+    UUID createMatch(UUID teamId, MatchCreateDTO match);
 
     MatchQueryDTO updateMatch(UUID id, MatchUpdateDTO matchUpdateDTO);
 }

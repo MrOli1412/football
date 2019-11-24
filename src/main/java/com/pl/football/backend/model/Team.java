@@ -16,6 +16,7 @@ import java.util.UUID;
 @ToString
 public class Team implements Serializable {
 
+    private static final long serialVersionUID = 3439373085649272598L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -43,12 +44,12 @@ public class Team implements Serializable {
         if (!(o instanceof Team)) return false;
         Team team = (Team) o;
         return Objects.equals(id, team.id) &&
-                Objects.equals(teamName, team.teamName) &&
-                Objects.equals(dresses, team.dresses);
+                Objects.equals(teamName, team.teamName);
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, teamName, dresses);
+        return Objects.hash(id, teamName);
     }
 }

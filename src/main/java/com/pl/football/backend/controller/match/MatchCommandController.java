@@ -22,9 +22,9 @@ public class MatchCommandController {
         this.matchCommandService = matchCommandService;
     }
 
-    @PostMapping()
-    public ResponseEntity<UUID> createMatch(@RequestBody MatchCreateDTO match){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(matchCommandService.createMatch(match));
+    @PostMapping(path = "{teamId}")
+    public ResponseEntity<UUID> createMatch(@PathVariable("teamId")UUID teamId,@RequestBody MatchCreateDTO match){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(matchCommandService.createMatch(teamId,match));
     }
 
     @PutMapping(path = "{id}")

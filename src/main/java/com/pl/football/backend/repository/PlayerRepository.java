@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface PlayerRepository extends JpaRepository<Player, UUID> {
     boolean existsByEvidentialNumber(String evidentialNumber);
+    Player getPlayerByEvidentialNumber(String evidentialNumber);
 }

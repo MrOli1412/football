@@ -17,6 +17,7 @@ import java.util.UUID;
 @ToString
 public class Club implements Serializable {
 
+    private static final long serialVersionUID = 4937186966903673941L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;

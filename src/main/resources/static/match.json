@@ -1,0 +1,166 @@
+{
+  "matchDate": "2018-07-30",
+  "dress": "30d93145-68af-4a0d-8239-6c01ce305ec1",
+  "players": [
+    {
+      "firstName": "BANAŚ",
+      "lastName": "TOMASZ",
+      "evidentialNumber": "0001254773",
+      "birthDay": "2002-04-25",
+      "contractDate": "2018-03-20",
+      "amateur": "A - Amator",
+      "lastClub": "0456 LKS WICHER  PŁONIA ",
+      "transferType": "DEFINITYWNY"
+    },
+    {
+      "firstName": "BUDZYŃSKI",
+      "lastName": "SEBASTIAN",
+      "evidentialNumber": "0001595845",
+      "birthDay": "1994-04-21",
+      "contractDate": "2019-08-08",
+      "amateur": "A - Amator",
+      "lastClub": "",
+      "transferType": null
+    },
+    {
+      "firstName": "BURDZIK",
+      "lastName": "MICHAŁ",
+      "evidentialNumber": "0001137977",
+      "birthDay": "2001-04-03",
+      "contractDate": "2015-08-26",
+      "amateur": "A - Amator",
+      "lastClub": "",
+      "transferType": null
+    },
+    {
+      "firstName": "CIĘCINKA",
+      "lastName": "ANDRZEJ",
+      "evidentialNumber": "0000266530",
+      "birthDay": "1987-10-18",
+      "contractDate": "2018-03-20",
+      "amateur": "A - Amator",
+      "lastClub": "0437 LKS ZRYW  RUDNIK ",
+      "transferType": "DEFINITYWNY"
+    },
+    {
+      "firstName": "DASZEK",
+      "lastName": "ARTUR",
+      "evidentialNumber": "0000135497",
+      "birthDay": "1980-08-15",
+      "contractDate": "2016-08-11",
+      "amateur": "A - Amator",
+      "lastClub": "TS GÓRNIK PSZÓW ",
+      "transferType": "WOLNY_ZAWODNIK"
+    },
+    {
+      "firstName": "DOKUPIL",
+      "lastName": "MICHAEL",
+      "evidentialNumber": "0000991170",
+      "birthDay": "1998-03-15",
+      "contractDate": "2014-08-22",
+      "amateur": "A - Amator",
+      "lastClub": "",
+      "transferType": null
+    },
+    {
+      "firstName": "GILGE",
+      "lastName": "PAWEŁ",
+      "evidentialNumber": "0001154590",
+      "birthDay": "2001-02-23",
+      "contractDate": "2015-09-10",
+      "amateur": "A - Amator",
+      "lastClub": "",
+      "transferType": null
+    },
+    {
+      "firstName": "GROMALA",
+      "lastName": "TOMASZ",
+      "evidentialNumber": "0000266487",
+      "birthDay": "1985-10-22",
+      "contractDate": "2017-03-23",
+      "amateur": "A - Amator",
+      "lastClub": "LKS 07 MARKOWICE ",
+      "transferType": "DEFINITYWNY"
+    },
+    {
+      "firstName": "HERUD",
+      "lastName": "ALEKSANDER",
+      "evidentialNumber": "0000865368",
+      "birthDay": "1989-04-30",
+      "contractDate": "2012-11-06",
+      "amateur": "A - Amator",
+      "lastClub": "",
+      "transferType": null
+    },
+    {
+      "firstName": "JASNY",
+      "lastName": "ARKADIUSZ",
+      "evidentialNumber": "0000267475",
+      "birthDay": "1994-05-26",
+      "contractDate": "2019-08-07",
+      "amateur": "A - Amator",
+      "lastClub": "0471 LKS BOJANÓW ",
+      "transferType": "WOLNY_ZAWODNIK"
+    },
+    {
+      "firstName": "JURCZYK",
+      "lastName": "ADAM",
+      "evidentialNumber": "0000454117",
+      "birthDay": "1985-12-10",
+      "contractDate": "2019-08-07",
+      "amateur": "A - Amator",
+      "lastClub": "0471 LKS BOJANÓW ",
+      "transferType": "WOLNY_ZAWODNIK"
+    },
+    {
+      "firstName": "KREMZER",
+      "lastName": "MACIEJ",
+      "evidentialNumber": "0000419905",
+      "birthDay": "1991-06-14",
+      "contractDate": "2018-07-30",
+      "amateur": "A - Amator",
+      "lastClub": "0417 LKS START  PIETROWICE W. ",
+      "transferType": "WOLNY_ZAWODNIK"
+    },
+    {
+      "firstName": "LAZAR",
+      "lastName": "ROBERT",
+      "evidentialNumber": "0001103226",
+      "birthDay": "1998-12-06",
+      "contractDate": "2015-03-23",
+      "amateur": "A - Amator",
+      "lastClub": "",
+      "transferType": null
+    },
+    {
+      "firstName": "MACHNIK",
+      "lastName": "JAKUB",
+      "evidentialNumber": "0000983683",
+      "birthDay": "2002-02-03",
+      "contractDate": "2018-03-20",
+      "amateur": "A - Amator",
+      "lastClub": "0456 LKS WICHER  PŁONIA ",
+      "transferType": "DEFINITYWNY"
+    },
+    {
+      "firstName": "MARCINEK",
+      "lastName": "ADAM",
+      "evidentialNumber": "0001150706",
+      "birthDay": "2001-10-25",
+      "contractDate": "2015-09-03",
+      "amateur": "A - Amator",
+      "lastClub": "",
+      "transferType": null
+    },
+    {
+      "firstName": "MIZIOCH",
+      "lastName": "ROBERT",
+      "evidentialNumber": "0000864318",
+      "birthDay": "1994-11-01",
+      "contractDate": "2012-10-23",
+      "amateur": "A - Amator",
+      "lastClub": "",
+      "transferType": null
+    }
+  ]
+}

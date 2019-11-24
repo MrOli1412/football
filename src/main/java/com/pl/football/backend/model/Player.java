@@ -18,6 +18,7 @@ import java.util.UUID;
 @Table(name = "player")
 public class Player implements Serializable {
 
+    private static final long serialVersionUID = -1231056271432744391L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -54,13 +55,9 @@ public class Player implements Serializable {
     @ToString.Exclude
     private Team team;
 
-    @ManyToOne
-    @JoinColumn(name = "Match_ID")
-    @ToString.Exclude
-    private Match match;
 
-    @Embedded
-    private Statistic statistic;
+
+
 
 
 
@@ -98,14 +95,12 @@ public class Player implements Serializable {
                 transferType == player.transferType &&
                 Objects.equals(penaltyStartDate, player.penaltyStartDate) &&
                 Objects.equals(penaltyStopDate, player.penaltyStopDate) &&
-                Objects.equals(dressNumber, player.dressNumber) &&
-                Objects.equals(team, player.team) &&
-                Objects.equals(match, player.match) &&
-                Objects.equals(statistic, player.statistic);
+                Objects.equals(dressNumber, player.dressNumber) ;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, evidentialNumber, birthDay, contractDate, amateur, lastClub, transferType, penaltyStartDate, penaltyStopDate, dressNumber, team, match, statistic);
+        return Objects.hash(id, firstName, lastName, evidentialNumber, birthDay, contractDate, amateur, lastClub, transferType, penaltyStartDate, penaltyStopDate, dressNumber);
     }
 }
