@@ -6,5 +6,5 @@ import lombok.Data;
 public class DressUpdateDTO {
 
     private String color;
-    Integer[] allowedNumbers;
+    String allowedNumbers;
 }

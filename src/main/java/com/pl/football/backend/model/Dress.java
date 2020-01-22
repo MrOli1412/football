@@ -18,7 +18,7 @@ public class Dress implements Serializable {
 
     @NotNull
     private  String color;
-    Integer[] allowedNumbers;
+    String allowedNumbers;
     @ManyToOne
     @JoinColumn(name = "Team_ID",nullable = false)
     private Team team;
@@ -30,13 +30,12 @@ public class Dress implements Serializable {
         Dress dress = (Dress) o;
         return Objects.equals(id, dress.id) &&
                 Objects.equals(color, dress.color) &&
-                Arrays.equals(allowedNumbers, dress.allowedNumbers);
+                Objects.equals(allowedNumbers, dress.allowedNumbers) ;
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, color);
-        result = 31 * result + Arrays.hashCode(allowedNumbers);
+        int result = Objects.hash(id, color,allowedNumbers);
         return result;
     }
 }

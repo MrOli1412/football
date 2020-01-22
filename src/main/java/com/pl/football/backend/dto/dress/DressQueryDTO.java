@@ -8,5 +8,5 @@ import javax.validation.constraints.NotNull;
 public class DressQueryDTO {
     @NotNull
     private String color;
-    Integer[] allowedNumbers;
+    String allowedNumbers;
 }

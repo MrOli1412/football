@@ -22,22 +22,23 @@ public class ClubQueryController {
 
     private final ClubQueryService clubQueryService;
 
-@Autowired
+    @Autowired
     public ClubQueryController(ClubQueryService clubQueryService) {
         this.clubQueryService = clubQueryService;
     }
 
+//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+////    @PreAuthorize(" hasRole('ADMIN')")
+//    public ResponseEntity<List<ClubQueryDTO>> getAllUsers() {
+//        log.debug("Search all clubs");
+//        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clubQueryService.getAllClubs());
+//    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize(" hasRole('ADMIN')")
-    public ResponseEntity<List<ClubQueryDTO>> getAllUsers() {
-        log.debug("Search all clubs");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clubQueryService.getAllClubs());
-    }
+    public ResponseEntity<ClubQueryDTO> getClubById(@RequestHeader("Authorization") String auth) {
+        log.info(auth);
 
-    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClubQueryDTO> getClubById(@PathVariable("id") UUID id) {
-        log.debug("Search  club");
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clubQueryService.getClubById(id));
+//        return ResponseEntity.status(HttpStatus.ACCEPTED).body(auth);
+    return null;
     }
 }

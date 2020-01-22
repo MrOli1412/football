@@ -10,7 +10,7 @@ public class DressCreateDTO {
 
     @NotNull
     private String color;
-    Integer[] allowedNumbers;
+    String allowedNumbers;
     @NotNull
     private Team team;
 }
