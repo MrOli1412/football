@@ -25,6 +25,8 @@ public class Club implements Serializable {
     @NotNull
     private String clubName;
 
+    //TODO Uzależnić nazwę klubu od regionu rozgrywek
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
     @ToString.Exclude

@@ -1,5 +1,6 @@
 package com.pl.football.backend.repository;
 
+import com.pl.football.backend.dto.user.UserQueryDTO;
 import com.pl.football.backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,5 +15,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+
+    Optional<User> findById(UUID uuid);
 
 }

@@ -5,9 +5,9 @@ import com.pl.football.backend.dto.user.UserCreateDTO;
 import com.pl.football.backend.dto.user.UserLoginDTO;
 import com.pl.football.backend.dto.user.UserLoginResponse;
 import com.pl.football.backend.model.RoleName;
-import com.pl.football.backend.service.club.ClubCommandService;
+import com.pl.football.backend.service.club.ClubService;
 import com.pl.football.backend.service.role.RoleCommandService;
-import com.pl.football.backend.service.user.UserCommandService;
+import com.pl.football.backend.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,22 +27,22 @@ import java.util.UUID;
 public class AuthenticationCommandController {
     final private AuthenticationManager authenticationManager;
 
-    final private UserCommandService userCommandService;
+    final private UserService userService;
 
     final private RoleCommandService roleCommandService;
-    private final ClubCommandService clubCommandService;
+    private final ClubService clubService;
 
     final private PasswordEncoder encoder;
 
     final private JwtProvider jwtProvider;
 
-    public AuthenticationCommandController(AuthenticationManager authenticationManager, UserCommandService userCommandService, RoleCommandService roleCommandService, PasswordEncoder encoder, JwtProvider jwtProvider, ClubCommandService clubCommandService) {
+    public AuthenticationCommandController(AuthenticationManager authenticationManager, UserService userService, RoleCommandService roleCommandService, PasswordEncoder encoder, JwtProvider jwtProvider, ClubService clubService) {
         this.authenticationManager = authenticationManager;
-        this.userCommandService = userCommandService;
+        this.userService = userService;
         this.roleCommandService = roleCommandService;
         this.encoder = encoder;
         this.jwtProvider = jwtProvider;
-        this.clubCommandService = clubCommandService;
+        this.clubService = clubService;
     }
 
     @PostMapping("/login")
@@ -61,11 +61,11 @@ public class AuthenticationCommandController {
 
     @PostMapping("/registry")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserCreateDTO user) {
-        if (userCommandService.existsByUsername(user.getUsername())) {
+        if (userService.existsByUsername(user.getUsername())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fail -> Username is already taken!");
         }
 
-        if (userCommandService.existsByEmail(user.getEmail())) {
+        if (userService.existsByEmail(user.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fail -> Email is already in use!");
         }
 
@@ -73,9 +73,7 @@ public class AuthenticationCommandController {
 
 
         user.setRole(roleCommandService.findByName(RoleName.ROLE_ADMIN).get());
-        UUID club = clubCommandService.createClub(user.getClub());
-        user.getClub().setId(club);
-        userCommandService.createUser(user);
+        userService.createUser(user, user.getClub());
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successful");
     }

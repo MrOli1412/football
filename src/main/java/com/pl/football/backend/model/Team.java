@@ -29,13 +29,17 @@ public class Team implements Serializable {
     @ToString.Exclude
     private Club club;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     @ToString.Exclude
     private Set<Player> players;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     @ToString.Exclude
     private Set<Dress> dresses;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
+    @ToString.Exclude
+    private Set<StaffPerson> staffPeople;
 
 
     @Override

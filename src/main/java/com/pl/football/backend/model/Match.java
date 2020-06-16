@@ -22,26 +22,45 @@ public class Match implements Serializable {
     private UUID id;
 
     @NotNull
-    LocalDate matchDate;
+    private LocalDate matchDate;
 
     @NotNull
     @OneToOne
     @ToString.Exclude
-    Dress dress;
+    private Dress dress;
 
     @OneToMany
     @Size(min = 11, max = 19)
     @ToString.Exclude
-    Set<Player> players;
+    @JoinColumn
+    private Set<Player> players;
+
+    private Boolean isFirstSquadPlayer;
 
     @NotNull
-    Boolean isFinish;
+    private Boolean isFinish;
+
+    private Boolean isAway;
+
+    private String teamName;
 
     @OneToOne
+    @JoinColumn(name = "Team_ID", nullable = false)
     @ToString.Exclude
-    Team team;
-//    @Embedded
-//    MatchStatistic matchStatistic;
+    private Team team;
+
+    @OneToOne
+    private Player captain;
+    @OneToOne
+    private Player firstSquadGoalKeeper;
+    @OneToOne
+    private Player reservedSquadGoalKeeper;
+
+    @OneToMany
+    @ToString.Exclude
+    @JoinColumn
+    private Set<StaffPerson> staffPeople;
+
 
     @Override
     public boolean equals(Object o) {

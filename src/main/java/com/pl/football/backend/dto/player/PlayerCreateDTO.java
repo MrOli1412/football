@@ -27,6 +27,5 @@ public class PlayerCreateDTO {
     @NotNull
     private LocalDate contractDate;
 
-    @NotNull
-    private UUID team;
+
 }

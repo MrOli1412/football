@@ -1,18 +1,17 @@
 package com.pl.football.backend.model;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+
 @Data
 @Entity
 @Table(name = "player")
@@ -50,15 +49,10 @@ public class Player implements Serializable {
 
     private Integer dressNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "Team_ID", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "TEAM_ID", nullable = false)
     @ToString.Exclude
     private Team team;
-
-
-
-
-
 
 
     public Optional<@Past LocalDate> getBirthDay() {
@@ -78,7 +72,6 @@ public class Player implements Serializable {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,7 +88,7 @@ public class Player implements Serializable {
                 transferType == player.transferType &&
                 Objects.equals(penaltyStartDate, player.penaltyStartDate) &&
                 Objects.equals(penaltyStopDate, player.penaltyStopDate) &&
-                Objects.equals(dressNumber, player.dressNumber) ;
+                Objects.equals(dressNumber, player.dressNumber);
 
     }
 

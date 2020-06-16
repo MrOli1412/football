@@ -3,7 +3,7 @@ package com.pl.football.backend.controller.dress;
 import com.pl.football.backend.dto.dress.DressCreateDTO;
 import com.pl.football.backend.dto.dress.DressQueryDTO;
 import com.pl.football.backend.dto.dress.DressUpdateDTO;
-import com.pl.football.backend.service.dress.DressCommandService;
+import com.pl.football.backend.service.dress.DressService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,21 +16,21 @@ import java.util.UUID;
 @RequestMapping("api/dress")
 @Log4j2
 public class DressCommandController {
-    private final DressCommandService dressCommandService;
+    private final DressService dressService;
 
     @Autowired
-    public DressCommandController(DressCommandService dressCommandService) {
-        this.dressCommandService = dressCommandService;
+    public DressCommandController(DressService dressService) {
+        this.dressService = dressService;
     }
 
     @PostMapping(path = "{teamId}")
     public ResponseEntity<UUID> createDress(@PathVariable("teamId") UUID teamId, @RequestBody DressCreateDTO dressCreateDTO) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressCommandService.createDress(teamId, dressCreateDTO));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressService.createDress(teamId, dressCreateDTO));
     }
 
     @PutMapping(path = "{id}")
     public ResponseEntity<DressQueryDTO> updateDress(@PathVariable("id") UUID id, @RequestBody DressUpdateDTO dressUpdateDTO) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressCommandService.updateDress(id, dressUpdateDTO));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressService.updateDress(id, dressUpdateDTO));
     }
 
 }

@@ -2,6 +2,7 @@ package com.pl.football.backend.exception;
 
 import lombok.Data;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 
 import java.util.Objects;
 
@@ -19,6 +20,10 @@ public class FootballException extends RuntimeException {
 
     public FootballException(String errMsg) {
         this.errMsg = errMsg;
+    }
+
+    public FootballException(HttpStatus unauthorized, String message) {
+
     }
 
     @Override

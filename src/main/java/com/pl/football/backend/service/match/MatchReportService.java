@@ -1,11 +1,14 @@
 package com.pl.football.backend.service.match;
 
+import com.pl.football.backend.dto.match.MatchReportDTO;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.UUID;
+import java.util.Map;
 
 @Service
 public interface MatchReportService {
-    void convertFile(UUID matchId) throws IOException;
+    Map<String,Object> convertFile(MatchReportDTO matchId) throws IOException;
 }

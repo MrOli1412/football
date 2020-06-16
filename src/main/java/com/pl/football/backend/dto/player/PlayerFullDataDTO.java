@@ -31,4 +31,9 @@ public class PlayerFullDataDTO {
 
     private TransferType transferType;
 
+    private Integer dressNumber;
+
+    public void setTransferType(String value) {
+        this.transferType = TransferType.valueOf(value);
+    }
 }

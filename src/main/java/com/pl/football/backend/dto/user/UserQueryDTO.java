@@ -1,5 +1,6 @@
 package com.pl.football.backend.dto.user;
 
+import com.pl.football.backend.model.Club;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -16,5 +17,8 @@ public class UserQueryDTO {
 
     @NotNull
     private String password;
+
+    @NotNull
+    private Club club;
 
 }

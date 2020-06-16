@@ -3,7 +3,7 @@ package com.pl.football.backend.controller.user;
 import com.pl.football.backend.dto.user.UserCreateDTO;
 import com.pl.football.backend.dto.user.UserQueryDTO;
 import com.pl.football.backend.dto.user.UserUpdateDTO;
-import com.pl.football.backend.service.user.UserCommandService;
+import com.pl.football.backend.service.user.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,20 +16,16 @@ import java.util.UUID;
 @RequestMapping("/api/user")
 @Log4j2
 public class UserCommandController {
-    private final UserCommandService userCommandService;
+    private final UserService userService;
     @Autowired
-    public UserCommandController(UserCommandService userCommandService) {
-        this.userCommandService = userCommandService;
+    public UserCommandController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping()
-    public ResponseEntity<UUID> createUser(@RequestBody UserCreateDTO userCreateDTO){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userCommandService.createUser(userCreateDTO));
-    }
 
     @PutMapping(path = "{id}")
     public ResponseEntity<UserQueryDTO> updateUser(@PathVariable("id")UUID id,@RequestBody UserUpdateDTO userUpdateDTO){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userCommandService.updateUser(id,userUpdateDTO));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateUser(id,userUpdateDTO));
     }
 
 }

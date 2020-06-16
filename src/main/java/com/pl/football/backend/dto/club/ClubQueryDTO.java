@@ -1,7 +1,6 @@
 package com.pl.football.backend.dto.club;
 
-import com.pl.football.backend.model.Team;
-import com.pl.football.backend.model.User;
+import com.pl.football.backend.dto.team.TeamClubDTO;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,7 @@ public class ClubQueryDTO {
     private String clubName;
 
 
-    private Set<Team> teams;
+    private Set<TeamClubDTO> teams;
 
     @Override
     public String toString() {

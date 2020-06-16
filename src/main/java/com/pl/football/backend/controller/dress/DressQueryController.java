@@ -1,7 +1,7 @@
 package com.pl.football.backend.controller.dress;
 
 import com.pl.football.backend.dto.dress.DressQueryDTO;
-import com.pl.football.backend.service.dress.DressQueryService;
+import com.pl.football.backend.service.dress.DressService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,20 +20,20 @@ import java.util.UUID;
 @Log4j2
 public class DressQueryController {
 
-    private final DressQueryService dressQueryService;
+    private final DressService dressService;
 @Autowired
-    public DressQueryController(DressQueryService dressQueryService) {
-        this.dressQueryService = dressQueryService;
+    public DressQueryController(DressService dressService) {
+        this.dressService = dressService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<DressQueryDTO>> getAllDresses() {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressQueryService.getAllDresses());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressService.getAllDresses());
     }
 
     @GetMapping(path = "{id}")
     public ResponseEntity<DressQueryDTO> getDressById(@PathVariable("id") UUID id) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressQueryService.getDressById(id));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressService.getDressById(id));
     }
 
 }

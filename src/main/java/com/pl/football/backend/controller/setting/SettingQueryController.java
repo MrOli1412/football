@@ -1,10 +1,8 @@
 package com.pl.football.backend.controller.setting;
 
 import com.pl.football.backend.dto.setting.SettingQueryDTO;
-import com.pl.football.backend.service.setting.SettingQueryService;
+import com.pl.football.backend.service.setting.SettingService;
 import lombok.extern.log4j.Log4j2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,17 +19,17 @@ import java.util.UUID;
 @RequestMapping("api/setting")
 @Log4j2
 public class SettingQueryController {
-    private final SettingQueryService settingQueryService;
+    private final SettingService settingService;
 @Autowired
-    public SettingQueryController(SettingQueryService settingQueryService) {
-        this.settingQueryService = settingQueryService;
+    public SettingQueryController(SettingService settingService) {
+        this.settingService = settingService;
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SettingQueryDTO>> getAllSettings(){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(settingQueryService.getAllSettings());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(settingService.getAllSettings());
     }
     @GetMapping(path = "{id}")
     public ResponseEntity<SettingQueryDTO> getSettingById(@PathVariable("id") UUID id){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(settingQueryService.getSettingById(id));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(settingService.getSettingById(id));
     }
 }

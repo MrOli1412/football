@@ -21,6 +21,7 @@ public class UserPrinciple implements UserDetails {
     private String name;
 
     private String username;
+    private UUID clubId;
 
     private String email;
 
@@ -30,13 +31,14 @@ public class UserPrinciple implements UserDetails {
     private GrantedAuthority authorities;
 
     public UserPrinciple(UUID id,
-                         String username, String email, String password,
+                         String username, String email, String password, UUID clubId,
                          GrantedAuthority authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.clubId = clubId;
     }
 
     public static UserPrinciple build(User user) {
@@ -48,10 +50,10 @@ public class UserPrinciple implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getClub().getId(),
                 authorities
         );
     }
-
 
 
     @Override
