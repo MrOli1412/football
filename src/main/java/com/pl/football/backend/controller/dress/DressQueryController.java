@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +15,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/dress")
 @Log4j2
+@CrossOrigin(value = "*", maxAge = 6000)
+
+
 public class DressQueryController {
 
     private final DressService dressService;
@@ -31,9 +31,10 @@ public class DressQueryController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressService.getAllDresses());
     }
 
-    @GetMapping(path = "{id}")
-    public ResponseEntity<DressQueryDTO> getDressById(@PathVariable("id") UUID id) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressService.getDressById(id));
+
+    @GetMapping(path = "{teamId}")
+    public ResponseEntity<List<DressQueryDTO>> getDressById(@PathVariable("teamId") UUID id) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressService.getDressForTeam(id));
     }
 
 }

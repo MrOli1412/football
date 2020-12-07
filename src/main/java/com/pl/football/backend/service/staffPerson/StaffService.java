@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 public interface StaffService {
-    StaffPersonQueryDTO savePerson(StaffPersonCommandDTO staffPerson);
+    StaffPersonQueryDTO savePerson(UUID teamId,StaffPersonCommandDTO staffPerson);
 
     StaffPersonQueryDTO updatePerson(UUID id, StaffPersonCommandDTO staffPerson);
 

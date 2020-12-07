@@ -8,11 +8,8 @@ import com.pl.football.backend.dto.team.TeamUpdateDTO;
 import com.pl.football.backend.exception.FootballException;
 import com.pl.football.backend.model.Club;
 import com.pl.football.backend.model.Team;
-import com.pl.football.backend.repository.TeamRepository;
+import com.pl.football.backend.repository.*;
 import com.pl.football.backend.service.club.ClubService;
-import com.pl.football.backend.service.dress.DressService;
-import com.pl.football.backend.service.match.MatchService;
-import com.pl.football.backend.service.player.PlayerService;
 import com.pl.football.backend.service.team.TeamService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +23,19 @@ import java.util.UUID;
 @Service
 public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
-    private final PlayerService playerService;
-    private final MatchService matchService;
-    private final DressService dressService;
-    private final ClubService clubService;
+    private final PlayerRepository playerRepository;
+    private final MatchRepository matchRepository;
+    private final DressRepository dressRepository;
+    private final ClubRepository clubRepository;
 
 
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository, PlayerService playerService, MatchService matchService, DressService dressService, ClubService clubService) {
+    public TeamServiceImpl(TeamRepository teamRepository, PlayerRepository playerRepository, MatchRepository matchRepository, DressRepository dressRepository, ClubRepository clubRepository) {
         this.teamRepository = teamRepository;
-        this.playerService = playerService;
-        this.matchService = matchService;
-        this.dressService = dressService;
-        this.clubService = clubService;
+        this.playerRepository = playerRepository;
+        this.matchRepository = matchRepository;
+        this.dressRepository = dressRepository;
+        this.clubRepository = clubRepository;
     }
 
     @Override
@@ -73,9 +70,9 @@ public class TeamServiceImpl implements TeamService {
     public TeamShortDTO getShortInfo(UUID id) {
         try {
             TeamShortDTO teamShortDTO = new TeamShortDTO();
-            teamShortDTO.setCountDress(this.dressService.countDressFromTeam(id));
-            teamShortDTO.setCountMatches(this.matchService.countMatchesFromTeam(id));
-            teamShortDTO.setCountPlayers(this.playerService.countPlayersFormTeam(id));
+            teamShortDTO.setCountDress(this.dressRepository.countByTeam_Id(id).orElse(0));
+            teamShortDTO.setCountMatches(this.matchRepository.countByTeam_Id(id).orElse(0));
+            teamShortDTO.setCountPlayers(this.playerRepository.countByTeam_Id(id).orElse(0));
             teamShortDTO.setTeamName(getTeamById(id).getTeamName());
             return teamShortDTO;
         } catch (Exception ex) {
@@ -85,14 +82,13 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public UUID createTeam(TeamCreateDTO teamCreateDTO, UUID clubId) {
-        if (teamRepository.findByTeamNameAndClub_Id(teamCreateDTO.getTeamName(), clubId)) {
+        if (teamRepository.existsByTeamNameAndClub_Id(teamCreateDTO.getTeamName(), clubId)) {
             throw new FootballException("Object exist");
         } else {
 
             ModelMapper mapper = new ModelMapper();
             Team team = mapper.map(teamCreateDTO, Team.class);
-            ClubQueryDTO clubById = clubService.getClubById(clubId);
-            Club map = mapper.map(clubById, Club.class);
+            Club map  = clubRepository.getById(clubId).orElseThrow(() -> new FootballException("Club does not exist"));
             team.setClub(map);
             return teamRepository.save(team).getId();
         }

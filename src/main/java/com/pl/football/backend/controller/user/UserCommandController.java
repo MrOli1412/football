@@ -15,6 +15,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/user")
 @Log4j2
+@CrossOrigin(value = "*", maxAge = 6000)
+
+
 public class UserCommandController {
     private final UserService userService;
     @Autowired

@@ -24,4 +24,6 @@ public interface UserService {
     UserQueryDTO getUserById(UUID id);
 
 
+
+
 }

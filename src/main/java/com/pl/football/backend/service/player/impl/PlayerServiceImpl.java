@@ -33,14 +33,12 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     private final PlayerRepository playerRepository;
-    private final TeamService teamService;
     private final TeamRepository teamRepository;
 
 
     @Autowired
-    public PlayerServiceImpl(PlayerRepository playerRepository, TeamService teamService, TeamRepository teamRepository) {
+    public PlayerServiceImpl(PlayerRepository playerRepository, TeamRepository teamRepository) {
         this.playerRepository = playerRepository;
-        this.teamService = teamService;
         this.teamRepository = teamRepository;
     }
 
@@ -64,8 +62,8 @@ public class PlayerServiceImpl implements PlayerService {
     public Integer countPlayersFormTeam(UUID teamId) {
         try {
             return playerRepository.countByTeam_Id(teamId).orElse(0);
-        }catch (Exception ex){
-            throw new FootballException(HttpStatus.BAD_REQUEST,"Error in couting players "+ex.getMessage());
+        } catch (Exception ex) {
+            throw new FootballException(HttpStatus.BAD_REQUEST, "Error in couting players " + ex.getMessage());
         }
     }
 
@@ -84,8 +82,8 @@ public class PlayerServiceImpl implements PlayerService {
             });
 
             return resultPlayers;
-        }catch (Exception ex){
-            throw new FootballException(HttpStatus.BAD_REQUEST,"Erro ing geting players by team id"+ex.getMessage());
+        } catch (Exception ex) {
+            throw new FootballException(HttpStatus.BAD_REQUEST, "Erro ing geting players by team id" + ex.getMessage());
         }
     }
 
@@ -107,8 +105,8 @@ public class PlayerServiceImpl implements PlayerService {
                 });
             });
             return result;
-        }catch (Exception ex){
-            throw new FootballException(HttpStatus.BAD_REQUEST,"Error in geting player match info "+ex.getMessage());
+        } catch (Exception ex) {
+            throw new FootballException(HttpStatus.BAD_REQUEST, "Error in geting player match info " + ex.getMessage());
         }
     }
 
@@ -118,9 +116,8 @@ public class PlayerServiceImpl implements PlayerService {
 
             ModelMapper modelMapper = new ModelMapper();
             Player player = modelMapper.map(playerCreateDTO, Player.class);
-            TeamClubDTO team = teamService.getTeamById(teamId);
-            Team map = modelMapper.map(team, Team.class);
-            player.setTeam(map);
+            Team team = teamRepository.getById(teamId).orElseThrow(() -> new FootballException("Team does not exist"));
+            player.setTeam(team);
             return playerRepository.save(player).getId();
         } catch (Exception ex) {
             throw new FootballException(HttpStatus.BAD_REQUEST, "Error in creating player" + ex.getMessage());
@@ -150,8 +147,7 @@ public class PlayerServiceImpl implements PlayerService {
             List<Player> players = new ArrayList<>();
             List<PlayerFullDataDTO> newPlayers = new ArrayList<>();
             List<PlayerFullDataDTO> playersInDb = new ArrayList<>();
-            Team team = modelMapper.map(teamService.getTeamById(teamId), Team.class);
-
+            Team team = teamRepository.getById(teamId).orElseThrow(() -> new FootballException("Team does not exist"));
             playersFromFile.forEach(player -> {
 
                 Player modelPlayer = modelMapper.map(player, Player.class);
@@ -194,8 +190,9 @@ public class PlayerServiceImpl implements PlayerService {
                     for (String line : strings) {
                         Matcher matcher = pattern.matcher(line);
                         if (matcher.find()) {
-                            playersFromFile.add(new PlayerFullDataDTO(matcher.group(1),
+                            playersFromFile.add(new PlayerFullDataDTO(
                                     matcher.group(2),
+                                    matcher.group(1),
                                     matcher.group(3),
                                     LocalDate.parse(matcher.group(4)),
                                     LocalDate.parse(matcher.group(5)),
@@ -224,7 +221,7 @@ public class PlayerServiceImpl implements PlayerService {
         List<String> buffer = new ArrayList<>();
 
         Pattern startPattern = Pattern.compile("(\\d+\\.)");
-        Pattern endPattern = Pattern.compile("(^|[ ])(D|Z|C|W|\\-)$");
+        Pattern endPattern = Pattern.compile("(^|[ ])([DZCW\\-])$");
 
         Matcher startMatcher;
         Matcher endMatcher;

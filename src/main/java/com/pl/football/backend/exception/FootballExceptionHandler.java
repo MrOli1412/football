@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class FootballExceptionHandler {
     @ExceptionHandler(FootballException.class)
     public ResponseEntity<?> handelFootballException(FootballException ex) {
-        return ResponseEntity.status(HttpStatus.valueOf(Integer.parseInt(ex.getErrCode())).value()).body(ex.getErrMsg());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErrMsg());
     }
 }

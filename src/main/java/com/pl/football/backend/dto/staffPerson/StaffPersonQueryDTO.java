@@ -8,7 +8,6 @@ public class StaffPersonQueryDTO {
     private String firstName;
     private String lastName;
     private String licenseNumber;
-    private Boolean isDefault;
     private Position position;
     private String odderFunction;
 }

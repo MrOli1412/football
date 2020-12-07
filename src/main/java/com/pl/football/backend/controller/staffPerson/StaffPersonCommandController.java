@@ -19,13 +19,13 @@ public class StaffPersonCommandController {
         this.staffService = staffService;
     }
 
-    @PostMapping(path = "/save")
-    public ResponseEntity<StaffPersonQueryDTO> savePlayer(@RequestBody StaffPersonCommandDTO staffPersonCommandDTO) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(staffService.savePerson(staffPersonCommandDTO));
+    @PostMapping(path = "{teamId}/save")
+    public ResponseEntity<StaffPersonQueryDTO> savePlayer(@PathVariable("teamId")UUID teamId,@RequestBody StaffPersonCommandDTO staffPersonCommandDTO) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(staffService.savePerson(teamId,staffPersonCommandDTO));
     }
 
-    @PostMapping(path = "/{id}")
-    public ResponseEntity<StaffPersonQueryDTO> savePlayer(@PathVariable("id") UUID id, @RequestBody StaffPersonCommandDTO staffPersonCommandDTO) {
+    @PostMapping(path = "{teamId}/update")
+    public ResponseEntity<StaffPersonQueryDTO> savePlayer(@PathVariable("teamId")UUID teamId,@PathVariable("id") UUID id, @RequestBody StaffPersonCommandDTO staffPersonCommandDTO) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(staffService.updatePerson(id, staffPersonCommandDTO));
     }
 }

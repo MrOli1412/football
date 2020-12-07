@@ -45,10 +45,9 @@ public class ClubServiceImpl implements ClubService {
     @Transactional
     @Override
     public UUID createClub(ClubCreateDTO clubCreateDTO) {
-        if(clubRepository.getByClubName(clubCreateDTO.getClubName())){
+        if(clubRepository.existsByClubName(clubCreateDTO.getClubName())){
             throw new FootballException("Existing club");
         }else{
-
             ModelMapper modelMapper = new ModelMapper();
             Club club = modelMapper.map(clubCreateDTO, Club.class);
             club = clubRepository.save(club);

@@ -55,19 +55,19 @@ public class Player implements Serializable {
     private Team team;
 
 
-    public Optional<@Past LocalDate> getBirthDay() {
+    public Optional< LocalDate> getBirthDay() {
         return Optional.of(birthDay);
     }
 
-    public Optional<@Past LocalDate> getContractDate() {
+    public Optional< LocalDate> getContractDate() {
         return Optional.of(contractDate);
     }
 
-    public Optional<@Past LocalDate> getPenaltyStartDate() {
+    public Optional< LocalDate> getPenaltyStartDate() {
         return Optional.ofNullable(penaltyStartDate);
     }
 
-    public Optional<@Past LocalDate> getPenaltyStopDate() {
+    public Optional< LocalDate> getPenaltyStopDate() {
         return Optional.ofNullable(penaltyStopDate);
     }
 

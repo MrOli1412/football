@@ -15,6 +15,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/club")
 @Log4j2
+@CrossOrigin(value = "*", maxAge = 6000)
+
+
 public class ClubCommandController {
 
     private final ClubService clubService;

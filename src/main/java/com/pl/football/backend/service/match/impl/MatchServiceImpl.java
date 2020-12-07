@@ -6,6 +6,7 @@ import com.pl.football.backend.dto.match.MatchReportDTO;
 import com.pl.football.backend.dto.match.MatchShortInfoDTO;
 import com.pl.football.backend.dto.match.MatchUpdateDTO;
 import com.pl.football.backend.dto.player.PlayerMatchDTO;
+import com.pl.football.backend.dto.staffPerson.StaffPersonQueryDTO;
 import com.pl.football.backend.dto.staffPerson.StaffPersonQueryMatchDTO;
 import com.pl.football.backend.exception.FootballException;
 import com.pl.football.backend.model.*;
@@ -24,24 +25,18 @@ import java.util.*;
 @Service
 public class MatchServiceImpl implements MatchService {
     private final MatchRepository matchRepository;
-    private final PlayerService playerService;
     private final PlayerRepository playerRepository;
     private final TeamRepository teamRepository;
     private final DressRepository dressRepository;
     private final StaffPersonRepository staffPersonRepository;
-    private final DressService dressService;
-    private StaffService staffService;
 
     @Autowired
-    public MatchServiceImpl(MatchRepository matchRepository, PlayerService playerService, PlayerRepository playerRepository, TeamRepository teamRepository, DressRepository dressRepository, StaffPersonRepository staffPersonRepository, DressService dressService, StaffService staffService) {
+    public MatchServiceImpl(MatchRepository matchRepository, PlayerRepository playerRepository, TeamRepository teamRepository, DressRepository dressRepository, StaffPersonRepository staffPersonRepository) {
         this.matchRepository = matchRepository;
-        this.playerService = playerService;
         this.playerRepository = playerRepository;
         this.teamRepository = teamRepository;
         this.dressRepository = dressRepository;
         this.staffPersonRepository = staffPersonRepository;
-        this.dressService = dressService;
-        this.staffService = staffService;
     }
 
     @Override
@@ -60,7 +55,7 @@ public class MatchServiceImpl implements MatchService {
                 playerToSave.add(playerRepository.findById(playerDto.getId()).orElseThrow(() -> new FootballException("Player does not exist")));
             });
             match.getStaffPeople().forEach(staff -> {
-                staffPeople.add(staffPersonRepository.findById(staff.getId()).orElseThrow(()-> new FootballException("Staff Person does not exist")));
+                staffPeople.add(staffPersonRepository.findById(staff.getId()).orElseThrow(() -> new FootballException("Staff Person does not exist")));
             });
             modelMapper.getConfiguration().setFieldMatchingEnabled(true);
             Match result = modelMapper.map(match, Match.class);
@@ -98,9 +93,9 @@ public class MatchServiceImpl implements MatchService {
         try {
             List<MatchShortInfoDTO> response = new ArrayList<>();
             ModelMapper modelMapper = new ModelMapper();
-             matchRepository.getByTeam_Id(id).ifPresent(team -> {
-                response.add(modelMapper.map(team, MatchShortInfoDTO.class));
-            });
+            matchRepository.getByTeam_Id(id).ifPresent(teams ->
+                    teams.forEach(team ->
+                            response.add(modelMapper.map(team, MatchShortInfoDTO.class))));
             return response;
         } catch (Exception ex) {
             throw new FootballException(HttpStatus.BAD_REQUEST, "Error in get match list for team" + ex.getMessage());
@@ -116,10 +111,27 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public MatchQueryDTO getInfoToFrom(UUID teamId) {
         try {
-            List<PlayerMatchDTO> players = playerService.getPlayerMatchInfo(teamId);
-            List<DressQueryDTO> dressForTeam = dressService.getDressForTeam(teamId);
-            List<StaffPersonQueryMatchDTO> staffPersons = staffService.getStaffByTeamId(teamId);
-            return new MatchQueryDTO(dressForTeam, players, staffPersons);
+            ModelMapper modelMapper = new ModelMapper();
+
+            List<PlayerMatchDTO> playerList = new ArrayList<>();
+            playerRepository.getByTeam_Id(teamId).ifPresent(players -> {
+                players.forEach(player -> {
+                    PlayerMatchDTO mappedPlayer = modelMapper.map(player, PlayerMatchDTO.class);
+                    player.getBirthDay().ifPresent(mappedPlayer::setBirthDay);
+                    player.getPenaltyStartDate().ifPresent(mappedPlayer::setPenaltyStartDate);
+                    player.getPenaltyStartDate().ifPresent(mappedPlayer::setPenaltyStopDate);
+                    playerList.add(mappedPlayer);
+                });
+            });
+            List<DressQueryDTO> dressForTeam = new ArrayList<>();
+            dressRepository.getByTeam_Id(teamId).ifPresent(dresses -> {
+                dresses.forEach(dress -> dressForTeam.add(modelMapper.map(dress, DressQueryDTO.class)));
+            });
+            List<StaffPersonQueryMatchDTO> staffList = new ArrayList<>();
+            staffPersonRepository.getByTeamId(teamId).ifPresent(staffPersons -> {
+                staffPersons.forEach(staff -> staffList.add(modelMapper.map(staff, StaffPersonQueryMatchDTO.class)));
+            });
+            return new MatchQueryDTO(dressForTeam, playerList, staffList);
         } catch (Exception ex) {
             throw new FootballException(HttpStatus.BAD_REQUEST, "Error ing geting info from form" + ex.getMessage());
         }

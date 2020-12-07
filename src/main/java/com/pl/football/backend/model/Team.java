@@ -37,7 +37,11 @@ public class Team implements Serializable {
     @ToString.Exclude
     private Set<Dress> dresses;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
+    @ManyToMany()
+    @JoinTable(
+            name = "team_staff",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "staff_id"))
     @ToString.Exclude
     private Set<StaffPerson> staffPeople;
 

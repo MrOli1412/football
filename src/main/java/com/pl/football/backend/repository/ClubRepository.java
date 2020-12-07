@@ -14,5 +14,5 @@ public interface ClubRepository extends JpaRepository<Club, UUID> {
 
     List<Club> findAll();
 
-    boolean getByClubName(String clubName);
+    boolean existsByClubName(String clubName);
 }

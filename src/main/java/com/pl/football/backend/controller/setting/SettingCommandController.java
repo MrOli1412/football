@@ -15,6 +15,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/setting")
 @Log4j2
+@CrossOrigin(value = "*", maxAge = 6000)
+
+
 public class SettingCommandController {
     private final SettingService settingService;
 

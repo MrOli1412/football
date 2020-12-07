@@ -8,6 +8,8 @@ import com.pl.football.backend.model.RoleName;
 import com.pl.football.backend.service.club.ClubService;
 import com.pl.football.backend.service.role.RoleCommandService;
 import com.pl.football.backend.service.user.UserService;
+import netscape.javascript.JSObject;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -74,7 +76,19 @@ public class AuthenticationCommandController {
 
         user.setRole(roleCommandService.findByName(RoleName.ROLE_ADMIN).get());
         userService.createUser(user, user.getClub());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("status", "Successful");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(jsonObject.toString());
+    }
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successful");
+    @GetMapping("/saveRoles")
+    public ResponseEntity<?> saveRoles() {
+        try {
+            roleCommandService.saveRoles();
+            return ResponseEntity.status(200).body("{}");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+
     }
 }

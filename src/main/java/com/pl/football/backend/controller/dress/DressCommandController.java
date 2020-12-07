@@ -15,6 +15,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/dress")
 @Log4j2
+@CrossOrigin(value = "*", maxAge = 6000)
+
+
 public class DressCommandController {
     private final DressService dressService;
 
@@ -23,7 +26,7 @@ public class DressCommandController {
         this.dressService = dressService;
     }
 
-    @PostMapping(path = "{teamId}")
+    @PostMapping(path = "{teamId}/save")
     public ResponseEntity<UUID> createDress(@PathVariable("teamId") UUID teamId, @RequestBody DressCreateDTO dressCreateDTO) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(dressService.createDress(teamId, dressCreateDTO));
     }

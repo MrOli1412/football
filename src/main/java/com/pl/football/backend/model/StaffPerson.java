@@ -5,6 +5,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -19,12 +20,13 @@ public class StaffPerson implements Serializable {
     private String firstName;
     private String lastName;
     private String licenseNumber;
-    private Boolean isDefault;
     private Position position;
     private String odderFunction;
 
-    @ManyToOne()
-    @JoinColumn(name = "TEAM_ID", nullable = false)
+    @ManyToMany(mappedBy = "staffPeople")
     @ToString.Exclude
-    private Team team;
+    private Set<Team> team;
+
+
+
 }

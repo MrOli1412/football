@@ -8,6 +8,7 @@ import com.pl.football.backend.exception.FootballException;
 import com.pl.football.backend.model.Dress;
 import com.pl.football.backend.model.Team;
 import com.pl.football.backend.repository.DressRepository;
+import com.pl.football.backend.repository.TeamRepository;
 import com.pl.football.backend.service.dress.DressService;
 import com.pl.football.backend.service.team.TeamService;
 import org.modelmapper.ModelMapper;
@@ -21,13 +22,13 @@ import java.util.*;
 public class DressServiceImpl implements DressService {
 
     private final DressRepository dressRepository;
-    private final TeamService teamService;
+    private final TeamRepository teamRepository;
 
 
     @Autowired
-    public DressServiceImpl(DressRepository dressRepository, TeamService teamService) {
+    public DressServiceImpl(DressRepository dressRepository, TeamRepository teamRepository) {
         this.dressRepository = dressRepository;
-        this.teamService = teamService;
+        this.teamRepository = teamRepository;
 
     }
 
@@ -36,8 +37,7 @@ public class DressServiceImpl implements DressService {
     public UUID createDress(UUID teamId, DressCreateDTO dressCreateDTO) {
         try {
             ModelMapper modelMapper = new ModelMapper();
-            TeamClubDTO teamById = teamService.getTeamById(teamId);
-            Team team = modelMapper.map(teamById, Team.class);
+            Team team = teamRepository.findById(teamId).orElseThrow(()-> new RuntimeException("Team does not exist"));
             Dress dress = modelMapper.map(dressCreateDTO, Dress.class);
             dress.setTeam(team);
             return dressRepository.saveAndFlush(dress).getId();
