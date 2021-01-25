@@ -79,7 +79,7 @@ public class WebsiteParesServiceTest {
     public void getTeamsForLeague() {
         listOfLeagues.forEach((regionId, mapOfLeagues) -> mapOfLeagues.forEach((leagueId, leagueName) -> {
             Map<String, String> teams = new HashMap<>();
-            String url = "https://www.laczynaspilka.pl/druzyny/nizsze-ligi," + Integer.parseInt(leagueId) + ".html";
+            String url = "https://www.laczynaspilka.pl/druzyny/nizsze-ligi," + Integer.parseInt("37828") + ".html";
             try {
                 Document site = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
                 Elements elementsByAttribute = site.select("div.row > a");
@@ -95,11 +95,16 @@ public class WebsiteParesServiceTest {
                 });
                 throw new Exception("|break");
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(leagueName + " " + teams.size());
+
+//                e.printStackTrace();
+            } finally {
+                listOfTeams.put(leagueId, teams);
             }
         }));
+        System.out.println(listOfTeams);
     }
 
 
