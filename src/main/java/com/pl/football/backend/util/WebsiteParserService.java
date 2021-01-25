@@ -37,14 +37,16 @@ public class WebsiteParserService {
 
     @Transactional
     public void parseStates() throws IOException {
-        List<State> listOfStates = new ArrayList<>();
+        Set<State> listOfStates = new HashSet<>();
         Document site = Jsoup.connect("https://www.laczynaspilka.pl/rozgrywki/nizsze-ligi.html").get();
         site.getAllElements();
         Elements listOfStatesElement = site.getElementsByAttribute("data-zpn-id");
         listOfStatesElement.forEach(state -> {
             listOfStates.add(new State(Integer.parseInt(state.attr("data-zpn-id")), state.attr("data-zpn-name")));
         });
-        stateRepository.saveAll(listOfStates);
+        if (listOfStates.size() != stateRepository.count()) {
+            stateRepository.saveAll(listOfStates);
+        }
 
 //        getListOfLeagueFromState();
     }
@@ -57,7 +59,7 @@ public class WebsiteParserService {
 
         String season = "2020/2021";
         List<State> all = stateRepository.findAll();
-        List<League> leagues = new ArrayList<>();
+        Set<League> leagues = new HashSet<>();
 
         all.forEach((key) -> {
             try {
@@ -79,17 +81,20 @@ public class WebsiteParserService {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                leagueRepository.saveAll(leagues);
+                if (leagues.size() != leagueRepository.count()) {
+                    leagueRepository.saveAll(leagues);
+                }
             }
         });
 
 
     }
+
     @Transactional
     public void prepareTeams() {
         List<League> leagues = leagueRepository.findAll();
         leagues.forEach(league -> {
-            List<PzpnTeam> teams = new ArrayList<>();
+            Set<PzpnTeam> teams = new HashSet<>();
             String url = "https://www.laczynaspilka.pl/druzyny/nizsze-ligi," + league.getId() + ".html";
             try {
                 Document site = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
@@ -114,7 +119,9 @@ public class WebsiteParserService {
 
 //                e.printStackTrace();
             } finally {
-                pzpnTeamRepository.saveAll(teams);
+                if (teams.size() != pzpnTeamRepository.count()) {
+                    pzpnTeamRepository.saveAll(teams);
+                }
             }
         });
 

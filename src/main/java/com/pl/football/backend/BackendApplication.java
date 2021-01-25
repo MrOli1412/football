@@ -31,9 +31,9 @@ public class BackendApplication extends SpringBootServletInitializer {
 
     @Bean
     public void preparePzpnData() throws IOException {
-        websiteParserService.parseStates();
-        websiteParserService.prepareLeagues();
-        websiteParserService.prepareTeams();
+//        websiteParserService.parseStates();
+//        websiteParserService.prepareLeagues();
+//        websiteParserService.prepareTeams();
     }
 
 

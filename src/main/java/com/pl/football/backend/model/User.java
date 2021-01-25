@@ -34,4 +34,5 @@ public class User implements Serializable {
     @NotNull
     @OneToOne
     private Club club;
+
 }

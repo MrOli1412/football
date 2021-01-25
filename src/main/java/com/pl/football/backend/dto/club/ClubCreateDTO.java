@@ -11,6 +11,7 @@ public class ClubCreateDTO {
 
     private String clubName;
 
+    private UUID pzpnTeamId;
 
 
 }

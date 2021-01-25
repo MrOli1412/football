@@ -1,5 +1,6 @@
 package com.pl.football.backend.model;
 
+import com.pl.football.backend.model.pzpn.PzpnTeam;
 import lombok.Data;
 import lombok.ToString;
 
@@ -28,6 +29,11 @@ public class Team implements Serializable {
     @JoinColumn(name = "Club_ID", nullable = false)
     @ToString.Exclude
     private Club club;
+
+    @OneToOne
+    @ToString.Exclude
+    private PzpnTeam pzpnTeam;
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     @ToString.Exclude
