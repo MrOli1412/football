@@ -40,7 +40,7 @@ public class PzpnServiceImpl implements PzpnService {
     }
 
     @Override
-    public List<LeagueDTO> getLeagueByStateId(Integer id) throws Exception {
+    public List<LeagueDTO> getLeagueByStateId(Integer id)  {
 
         try {
             List<LeagueDTO> response = new ArrayList<>();
@@ -56,15 +56,13 @@ public class PzpnServiceImpl implements PzpnService {
     }
 
     @Override
-    public List<PzpnTeamDTO> getTeamsByLeagueId(Integer id) throws Exception {
+    public List<PzpnTeamDTO> getTeamsByLeagueId(Integer id) {
         try {
             List<PzpnTeamDTO> response = new ArrayList<>();
             ModelMapper mapper = new ModelMapper();
-            pzpnTeamRepository.findByLeague_Id(id).ifPresent(pzpnTeams -> {
-                pzpnTeams.forEach(pzpnTeam -> {
-                    response.add(mapper.map(pzpnTeam, PzpnTeamDTO.class));
-                });
-            });
+            pzpnTeamRepository.findByLeague_Id(id).ifPresent(pzpnTeams -> pzpnTeams.forEach(pzpnTeam -> {
+                response.add(mapper.map(pzpnTeam, PzpnTeamDTO.class));
+            }));
             return response;
         } catch (Exception ex) {
             ex.printStackTrace();
