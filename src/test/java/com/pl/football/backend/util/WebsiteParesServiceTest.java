@@ -17,6 +17,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @RunWith(SpringRunner.class)
@@ -34,13 +35,27 @@ public class WebsiteParesServiceTest {
     @Before()
     public void parseStates() throws IOException {
 //        Map<String, String> listOfStates = new HashMap<>();
-        Document site = Jsoup.connect("https://www.laczynaspilka.pl/rozgrywki/nizsze-ligi.html").get();
-        site.getAllElements();
-        Elements listOfStatesElement = site.getElementsByAttribute("data-zpn-id");
-        listOfStatesElement.forEach(state -> {
-            listOfStates.put(state.attr("data-zpn-id"), state.attr("data-zpn-name"));
+//        Document site = Jsoup.connect("https://www.laczynaspilka.pl/rozgrywki/nizsze-ligi.html").get();
+//        site.getAllElements();
+//        Elements listOfStatesElement = site.getElementsByAttribute("data-zpn-id");
+//        listOfStatesElement.forEach(state -> {
+//            listOfStates.put(state.attr("data-zpn-id"), state.attr("data-zpn-name"));
+//        });
+//        getListOfLeagueFromState();
+    }
+
+    @Test
+    public void importTeams() throws IOException {
+        Document site = Jsoup.connect("https://www.laczynaspilka.pl/druzyna/marol-jacentow,401290.html").get();
+        Elements elementsByClass = site.getElementsByClass("page-subnavi__item");
+        Optional<Element> result =
+                elementsByClass.stream().filter(obj -> obj.attr("href").contains("klub")).findFirst();
+        result.ifPresent(element -> {
+            String href = element.attr("href");
+            System.out.println(href);
         });
-        getListOfLeagueFromState();
+
+
     }
 
     /*

@@ -22,4 +22,6 @@ public interface TeamService {
     List<TeamClubDTO> getTeamsForClub(UUID clubId);
 
     TeamShortDTO getShortInfo(UUID id);
+
+    List<TeamClubDTO> importTeams(UUID pzpnTeamId) throws Exception;
 }

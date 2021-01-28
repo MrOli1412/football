@@ -37,4 +37,10 @@ public class TeamQueryController {
     public ResponseEntity<TeamShortDTO> getTeamById(@PathVariable("id") UUID id){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(teamService.getShortInfo(id));
     }
+    @GetMapping(path = "/generate")
+    public ResponseEntity<?> generateTeamsFromPZPN() throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        return ResponseEntity.status(HttpStatus.OK).body(teamService.importTeams(userPrinciple.getPzpnTemaId()));
+    }
 }

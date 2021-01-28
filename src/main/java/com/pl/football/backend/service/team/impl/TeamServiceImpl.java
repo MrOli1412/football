@@ -1,6 +1,5 @@
 package com.pl.football.backend.service.team.impl;
 
-import com.pl.football.backend.dto.club.ClubQueryDTO;
 import com.pl.football.backend.dto.team.TeamClubDTO;
 import com.pl.football.backend.dto.team.TeamCreateDTO;
 import com.pl.football.backend.dto.team.TeamShortDTO;
@@ -8,8 +7,9 @@ import com.pl.football.backend.dto.team.TeamUpdateDTO;
 import com.pl.football.backend.exception.FootballException;
 import com.pl.football.backend.model.Club;
 import com.pl.football.backend.model.Team;
+import com.pl.football.backend.model.pzpn.PzpnTeam;
 import com.pl.football.backend.repository.*;
-import com.pl.football.backend.service.club.ClubService;
+import com.pl.football.backend.repository.pzpn.PZPNTeamRepository;
 import com.pl.football.backend.service.team.TeamService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,15 +28,17 @@ public class TeamServiceImpl implements TeamService {
     private final MatchRepository matchRepository;
     private final DressRepository dressRepository;
     private final ClubRepository clubRepository;
+    private final PZPNTeamRepository pzpnTeamRepository;
 
 
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository, PlayerRepository playerRepository, MatchRepository matchRepository, DressRepository dressRepository, ClubRepository clubRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository, PlayerRepository playerRepository, MatchRepository matchRepository, DressRepository dressRepository, ClubRepository clubRepository, PZPNTeamRepository pzpnTeamRepository) {
         this.teamRepository = teamRepository;
         this.playerRepository = playerRepository;
         this.matchRepository = matchRepository;
         this.dressRepository = dressRepository;
         this.clubRepository = clubRepository;
+        this.pzpnTeamRepository = pzpnTeamRepository;
     }
 
     @Override
@@ -78,6 +81,15 @@ public class TeamServiceImpl implements TeamService {
         } catch (Exception ex) {
             throw new FootballException(HttpStatus.BAD_REQUEST, "Error in get short team info" + ex.getMessage());
         }
+    }
+
+    @Override
+    public List<TeamClubDTO> importTeams(UUID pzpnTeamId) throws Exception {
+        PzpnTeam pzpnTeam = this.pzpnTeamRepository.findById(pzpnTeamId).orElseThrow(Exception::new);
+        String href = pzpnTeam.getHref();
+
+        System.out.println(href);
+        return Collections.singletonList(new TeamClubDTO());
     }
 
     @Override

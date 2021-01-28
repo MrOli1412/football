@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Data
 public class UserCreateDTO {
@@ -25,6 +26,10 @@ public class UserCreateDTO {
 
     @NotNull
     private ClubCreateDTO club;
+
+    @NotNull
+    private UUID pzpnTeamId;
+
 
 
 

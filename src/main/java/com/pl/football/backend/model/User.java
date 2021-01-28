@@ -1,5 +1,6 @@
 package com.pl.football.backend.model;
 
+import com.pl.football.backend.model.pzpn.PzpnTeam;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = -1767911586955849869L;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @NotNull
     private String username;
@@ -34,5 +35,8 @@ public class User implements Serializable {
     @NotNull
     @OneToOne
     private Club club;
+    @NotNull
+    @OneToOne
+    private PzpnTeam pzpnTeam;
 
 }

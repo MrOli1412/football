@@ -6,16 +6,14 @@ import com.pl.football.backend.dto.club.ClubUpdateDTO;
 import com.pl.football.backend.exception.FootballException;
 import com.pl.football.backend.model.Club;
 import com.pl.football.backend.repository.ClubRepository;
+import com.pl.football.backend.repository.pzpn.PZPNTeamRepository;
 import com.pl.football.backend.service.club.ClubService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,6 +24,7 @@ public class ClubServiceImpl implements ClubService {
     @Autowired
     public ClubServiceImpl(ClubRepository clubRepository) {
         this.clubRepository = clubRepository;
+
     }
 
     @Override
@@ -48,6 +47,7 @@ public class ClubServiceImpl implements ClubService {
         if(clubRepository.existsByClubName(clubCreateDTO.getClubName())){
             throw new FootballException("Existing club");
         }else{
+
             ModelMapper modelMapper = new ModelMapper();
             Club club = modelMapper.map(clubCreateDTO, Club.class);
             club = clubRepository.save(club);

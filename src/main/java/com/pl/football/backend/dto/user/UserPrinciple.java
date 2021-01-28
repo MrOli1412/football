@@ -22,6 +22,8 @@ public class UserPrinciple implements UserDetails {
 
     private String username;
     private UUID clubId;
+    private UUID pzpnTemaId;
+
 
     private String email;
 
@@ -31,7 +33,7 @@ public class UserPrinciple implements UserDetails {
     private GrantedAuthority authorities;
 
     public UserPrinciple(UUID id,
-                         String username, String email, String password, UUID clubId,
+                         String username, String email, String password, UUID clubId,UUID pzpnTemaId,
                          GrantedAuthority authorities) {
         this.id = id;
         this.username = username;
@@ -39,6 +41,8 @@ public class UserPrinciple implements UserDetails {
         this.password = password;
         this.authorities = authorities;
         this.clubId = clubId;
+        this.pzpnTemaId = pzpnTemaId;
+
     }
 
     public static UserPrinciple build(User user) {
@@ -51,6 +55,7 @@ public class UserPrinciple implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.getClub().getId(),
+                user.getPzpnTeam().getId(),
                 authorities
         );
     }

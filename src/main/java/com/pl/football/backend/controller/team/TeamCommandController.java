@@ -34,6 +34,7 @@ public class TeamCommandController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(teamService.createTeam(team, userPrinciple.getClubId()));
     }
 
+
     @PutMapping(path = "{id}")
     public ResponseEntity<TeamClubDTO> updateTeam(@PathVariable("id") UUID id, @RequestBody TeamUpdateDTO teamUpdateDTO) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(teamService.updateTeam(id, teamUpdateDTO));

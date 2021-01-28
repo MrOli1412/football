@@ -12,4 +12,7 @@ public class TeamCreateDTO {
     @NotNull
     private String teamName;
 
+    @NotNull
+    private boolean isGeneratedFromPZPN;
+
 }

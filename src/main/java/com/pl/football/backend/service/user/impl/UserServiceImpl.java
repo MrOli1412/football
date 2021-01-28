@@ -7,6 +7,7 @@ import com.pl.football.backend.dto.user.UserUpdateDTO;
 import com.pl.football.backend.exception.FootballException;
 import com.pl.football.backend.model.User;
 import com.pl.football.backend.repository.UserRepository;
+import com.pl.football.backend.repository.pzpn.PZPNTeamRepository;
 import com.pl.football.backend.service.club.ClubService;
 import com.pl.football.backend.service.user.UserService;
 import org.modelmapper.ModelMapper;
@@ -16,18 +17,20 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ClubService clubService;
+    private final PZPNTeamRepository pzpnTeamRepository;
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ClubService clubService) {
+    public UserServiceImpl(UserRepository userRepository, ClubService clubService, PZPNTeamRepository pzpnTeamRepository) {
         this.userRepository = userRepository;
         this.clubService = clubService;
+        this.pzpnTeamRepository = pzpnTeamRepository;
     }
 
     @Transactional
@@ -36,6 +39,7 @@ public class UserServiceImpl implements UserService {
         try {
             UUID clubId = clubService.createClub(club);
             userCreateDTO.getClub().setId(clubId);
+
             ModelMapper modelMapper = new ModelMapper();
             User user = modelMapper.map(userCreateDTO, User.class);
             user = userRepository.save(user);

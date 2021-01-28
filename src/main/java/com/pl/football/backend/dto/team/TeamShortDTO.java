@@ -8,4 +8,5 @@ public class TeamShortDTO {
     Integer countPlayers;
     Integer countMatches;
     Integer countDress;
+    boolean isGeneratedFromPZPZ;
 }

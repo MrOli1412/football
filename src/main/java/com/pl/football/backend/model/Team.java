@@ -51,6 +51,7 @@ public class Team implements Serializable {
     @ToString.Exclude
     private Set<StaffPerson> staffPeople;
 
+    private boolean isGeneratedFromPZPN;
 
     @Override
     public boolean equals(Object o) {
