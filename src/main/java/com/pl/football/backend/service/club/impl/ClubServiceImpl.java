@@ -30,9 +30,14 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public ClubQueryDTO getClubById(UUID id) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(clubRepository.findById(id).orElseThrow(() -> new FootballException("Club does not exist")), ClubQueryDTO.class);
+        ClubQueryDTO club_does_not_exist = null;
+      try {
+          club_does_not_exist = modelMapper.map(clubRepository.findById(id).orElseThrow(() -> new FootballException("Club does not exist")), ClubQueryDTO.class);
+      }catch (Exception e){
+          e.printStackTrace();
+      }
+        return club_does_not_exist;
     }
-
 
 
     @Override
@@ -44,9 +49,9 @@ public class ClubServiceImpl implements ClubService {
     @Transactional
     @Override
     public UUID createClub(ClubCreateDTO clubCreateDTO) {
-        if(clubRepository.existsByClubName(clubCreateDTO.getClubName())){
+        if (clubRepository.existsByClubName(clubCreateDTO.getClubName())) {
             throw new FootballException("Existing club");
-        }else{
+        } else {
 
             ModelMapper modelMapper = new ModelMapper();
             Club club = modelMapper.map(clubCreateDTO, Club.class);
@@ -57,7 +62,7 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public ClubQueryDTO updateClub(UUID id, ClubUpdateDTO clubUpdateDTO) {
-        Club club  = clubRepository.getById(id).orElseThrow(() -> new FootballException("Club does not exist"));
+        Club club = clubRepository.getById(id).orElseThrow(() -> new FootballException("Club does not exist"));
         ModelMapper modelMapper = new ModelMapper();
         club.setClubName(clubUpdateDTO.getClubName());
         club = clubRepository.saveAndFlush(club);

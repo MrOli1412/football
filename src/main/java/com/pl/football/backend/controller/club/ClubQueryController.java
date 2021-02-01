@@ -45,7 +45,8 @@ public class ClubQueryController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
             UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-            return ResponseEntity.status(200).body(this.clubService.getClubById(userPrinciple.getClubId()));
+            ClubQueryDTO clubById = this.clubService.getClubById(userPrinciple.getClubId());
+            return ResponseEntity.status(200).body(clubById);
         } catch (Exception ex) {
             throw new FootballException(HttpStatus.UNAUTHORIZED,"Unuthorized");
         }

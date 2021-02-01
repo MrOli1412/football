@@ -10,6 +10,7 @@ import io.swagger.models.auth.In;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,5 +126,49 @@ public class WebsiteParserService {
             }
         });
 
+    }
+
+
+    public Map<String, String> importTeams(String href) throws IOException {
+        Map<String, String> teams = new HashMap<>();
+        Document site = Jsoup.connect(href).get();
+        Elements elementsByClass = site.getElementsByClass("page-subnavi__item");
+        Optional<Element> result =
+                elementsByClass.stream().filter(obj -> obj.attr("href").contains("klub")).findFirst();
+        result.ifPresent(element -> {
+            String clubHref = element.attr("href");
+
+            try {
+                Document clubSite = Jsoup.connect(clubHref).get();
+                Elements elements = clubSite.getElementsByClass("team-name");
+                elements.forEach(element1 -> {
+
+
+                    Optional<Node> first = element1.parent().childNodes().stream().filter(node -> {
+                        if (node instanceof Element) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }).findFirst();
+                    if (first.isPresent()) {
+                        if (first.get() instanceof Element) {
+                            teams.put(element1.parent().attr("href"), element1.text() + " " + ((Element) first.get()).text());
+                        } else {
+                            teams.put(element1.parent().attr("href"), element1.text());
+                        }
+                    } else {
+                        teams.put(element1.parent().attr("href"), element1.text());
+
+                    }
+
+                });
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+        return teams;
     }
 }

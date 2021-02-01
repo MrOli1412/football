@@ -11,15 +11,13 @@ import com.pl.football.backend.model.pzpn.PzpnTeam;
 import com.pl.football.backend.repository.*;
 import com.pl.football.backend.repository.pzpn.PZPNTeamRepository;
 import com.pl.football.backend.service.team.TeamService;
+import com.pl.football.backend.util.WebsiteParserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -29,16 +27,18 @@ public class TeamServiceImpl implements TeamService {
     private final DressRepository dressRepository;
     private final ClubRepository clubRepository;
     private final PZPNTeamRepository pzpnTeamRepository;
+    private final WebsiteParserService service;
 
 
     @Autowired
-    public TeamServiceImpl(TeamRepository teamRepository, PlayerRepository playerRepository, MatchRepository matchRepository, DressRepository dressRepository, ClubRepository clubRepository, PZPNTeamRepository pzpnTeamRepository) {
+    public TeamServiceImpl(TeamRepository teamRepository, PlayerRepository playerRepository, MatchRepository matchRepository, DressRepository dressRepository, ClubRepository clubRepository, PZPNTeamRepository pzpnTeamRepository, WebsiteParserService service) {
         this.teamRepository = teamRepository;
         this.playerRepository = playerRepository;
         this.matchRepository = matchRepository;
         this.dressRepository = dressRepository;
         this.clubRepository = clubRepository;
         this.pzpnTeamRepository = pzpnTeamRepository;
+        this.service = service;
     }
 
     @Override
@@ -84,12 +84,24 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<TeamClubDTO> importTeams(UUID pzpnTeamId) throws Exception {
+    public List<TeamClubDTO> importTeams(UUID pzpnTeamId, UUID clubId) throws Exception {
         PzpnTeam pzpnTeam = this.pzpnTeamRepository.findById(pzpnTeamId).orElseThrow(Exception::new);
         String href = pzpnTeam.getHref();
+        Map<String, String> stringStringMap = service.importTeams(href);
+        ModelMapper mapper = new ModelMapper();
+        List<TeamClubDTO> teamClubDTOList = new ArrayList<>();
+        stringStringMap.forEach((key, value) -> {
+            TeamCreateDTO teamCreateDTO = new TeamCreateDTO();
+            teamCreateDTO.setTeamName(value);
+            teamCreateDTO.setGeneratedFromPzpn(true);
+            teamCreateDTO.setPzpnTeamHref(key);
+            teamCreateDTO.setClubId(clubId);
+            Team map = mapper.map(teamCreateDTO, Team.class);
+            Team save = teamRepository.save(map);
+            teamClubDTOList.add(new TeamClubDTO(save.getId(),save.getTeamName()));
 
-        System.out.println(href);
-        return Collections.singletonList(new TeamClubDTO());
+        });
+        return teamClubDTOList;
     }
 
     @Override
@@ -100,7 +112,7 @@ public class TeamServiceImpl implements TeamService {
 
             ModelMapper mapper = new ModelMapper();
             Team team = mapper.map(teamCreateDTO, Team.class);
-            Club map  = clubRepository.getById(clubId).orElseThrow(() -> new FootballException("Club does not exist"));
+            Club map = clubRepository.getById(clubId).orElseThrow(() -> new FootballException("Club does not exist"));
             team.setClub(map);
             return teamRepository.save(team).getId();
         }
@@ -109,7 +121,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamClubDTO updateTeam(UUID id, TeamUpdateDTO teamUpdateDTO) {
-        Team team = teamRepository.findById(id).orElseThrow(()->new FootballException("team does not exist"));
+        Team team = teamRepository.findById(id).orElseThrow(() -> new FootballException("team does not exist"));
         try {
             //TODO Co można zmienić w drużynie?
 

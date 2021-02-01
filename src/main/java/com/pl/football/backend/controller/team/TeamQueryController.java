@@ -41,6 +41,6 @@ public class TeamQueryController {
     public ResponseEntity<?> generateTeamsFromPZPN() throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-        return ResponseEntity.status(HttpStatus.OK).body(teamService.importTeams(userPrinciple.getPzpnTemaId()));
+        return ResponseEntity.status(HttpStatus.OK).body(teamService.importTeams(userPrinciple.getPzpnTemaId(),userPrinciple.getClubId()));
     }
 }

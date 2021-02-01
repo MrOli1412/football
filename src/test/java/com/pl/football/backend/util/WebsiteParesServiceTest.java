@@ -3,6 +3,7 @@ package com.pl.football.backend.util;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 import org.junit.Assert;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -30,6 +32,7 @@ public class WebsiteParesServiceTest {
     Map<String, String> listOfStates = new HashMap<>();
     Map<String, Map<String, String>> listOfLeagues = new HashMap<>();
     Map<String, Map<String, String>> listOfTeams = new HashMap<>();
+    Map<String, String> listOfTeam2 = new HashMap<>();
 
 
     @Before()
@@ -52,7 +55,38 @@ public class WebsiteParesServiceTest {
                 elementsByClass.stream().filter(obj -> obj.attr("href").contains("klub")).findFirst();
         result.ifPresent(element -> {
             String href = element.attr("href");
-            System.out.println(href);
+
+            try {
+                Document clubSite = Jsoup.connect(href).get();
+                Elements elements = clubSite.getElementsByClass("team-name");
+                elements.forEach(element1 -> {
+
+
+                    Optional<Node> first = element1.parent().childNodes().stream().filter(node -> {
+                        if (node instanceof Element) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }).findFirst();
+                    if (first.isPresent()) {
+                        if (first.get() instanceof Element) {
+                            listOfTeam2.put(element1.parent().attr("href"), element1.text() + " " + ((Element) first.get()).text());
+                        } else {
+                            listOfTeam2.put(element1.parent().attr("href"), element1.text());
+                        }
+                    } else {
+                        listOfTeam2.put(element1.parent().attr("href"), element1.text());
+
+                    }
+
+                });
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(listOfTeam2.size());
+
         });
 
 

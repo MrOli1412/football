@@ -13,6 +13,12 @@ public class TeamCreateDTO {
     private String teamName;
 
     @NotNull
-    private boolean isGeneratedFromPZPN;
+    private boolean isGeneratedFromPzpn;
+
+    private String pzpnTeamHref;
+
+    @NotNull
+    private UUID clubId;
+
 
 }
